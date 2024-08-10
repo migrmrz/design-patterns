@@ -1,9 +1,13 @@
 package models
 
-import "context"
+import (
+	"context"
+	"time"
+)
 
 func (d *DogBreed) AllDogBreeds() ([]*DogBreed, error) {
-	ctx, cancel : context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+
 	defer cancel()
 
 	query := `select id, breed, weight_low_lbs, weight_high_lbs,
