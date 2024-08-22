@@ -80,7 +80,30 @@ func (app *application) CreateDogWithBuilder(w http.ResponseWriter, r *http.Requ
 		SetWeight(15).
 		SetDescription("A mixed breed of unknown origin. Probably has some German Shepherd heritage.").
 		SetColor("Black and White").
-		SetAge(3).SetAgeEstimated(true).
+		SetAge(3).
+		SetAgeEstimated(true).
+		Build()
+
+	if err != nil {
+		_ = tools.ErrorJSON(w, err, http.StatusBadRequest)
+	}
+
+	_ = tools.WriteJSON(w, http.StatusOK, p)
+}
+
+func (app *application) CreateCatWithBuilder(w http.ResponseWriter, r *http.Request) {
+	var tools toolbox.Tools
+
+	// create a cat using the builder pattern
+	p, err := pets.NewPetBuilder().
+		SetSpecies("cat").
+		SetBreed("ragdoll").
+		SetWeight(15).
+		SetDescription("Ragdoll").
+		SetColor("White with black and brown").
+		SetGeographicOrigin("United States").
+		SetAge(2).
+		SetAgeEstimated(false).
 		Build()
 
 	if err != nil {
