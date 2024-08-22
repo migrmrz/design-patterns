@@ -1,8 +1,9 @@
 package main
 
 import (
-	"factory/products"
 	"fmt"
+
+	"factory/products"
 )
 
 func main() {

@@ -60,7 +60,7 @@ func (app *application) CreateCatFromAbstractFactory(w http.ResponseWriter, r *h
 func (app *application) GetAllDogBreedsJSON(w http.ResponseWriter, r *http.Request) {
 	var tools toolbox.Tools
 
-	dogBreeds, err := app.Models.DogBreed.GetAll()
+	dogBreeds, err := app.App.Models.DogBreed.GetAll()
 	if err != nil {
 		_ = tools.ErrorJSON(w, err, http.StatusBadRequest)
 
@@ -68,4 +68,24 @@ func (app *application) GetAllDogBreedsJSON(w http.ResponseWriter, r *http.Reque
 	}
 
 	_ = tools.WriteJSON(w, http.StatusOK, dogBreeds)
+}
+
+func (app *application) CreateDogWithBuilder(w http.ResponseWriter, r *http.Request) {
+	var tools toolbox.Tools
+
+	// create a dog using the builder pattern
+	p, err := pets.NewPetBuilder().
+		SetSpecies("dog").
+		SetBreed("mixed breed").
+		SetWeight(15).
+		SetDescription("A mixed breed of unknown origin. Probably has some German Shepherd heritage.").
+		SetColor("Black and White").
+		SetAge(3).SetAgeEstimated(true).
+		Build()
+
+	if err != nil {
+		_ = tools.ErrorJSON(w, err, http.StatusBadRequest)
+	}
+
+	_ = tools.WriteJSON(w, http.StatusOK, p)
 }
