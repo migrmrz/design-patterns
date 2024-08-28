@@ -112,3 +112,17 @@ func (app *application) CreateCatWithBuilder(w http.ResponseWriter, r *http.Requ
 
 	_ = tools.WriteJSON(w, http.StatusOK, p)
 }
+
+// GetAllCatBreeds get all cat breeds from some source (using an adapter) and returns it as JSON.
+func (app *application) GetAllCatBreeds(w http.ResponseWriter, r *http.Request) {
+	var tools toolbox.Tools
+
+	// Since we are using the adapter pattern, this handler does not care where it get the data from
+	// and it will simply use whatever is stored in app.catService.
+	catBreeds, err := app.catService.GetAllBreeds()
+	if err != nil {
+		_ = tools.ErrorJSON(w, err, http.StatusBadRequest)
+	}
+
+	_ = tools.WriteJSON(w, http.StatusOK, catBreeds)
+}
