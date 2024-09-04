@@ -6,6 +6,7 @@ import "database/sql"
 // this interface must implement all the methods included here.
 type Repository interface {
 	AllDogBreeds() ([]*DogBreed, error)
+	GetBreedByName(b string) (*DogBreed, error)
 }
 
 // mySQLRepository is a simple wrapper for the *sql.DB type.
